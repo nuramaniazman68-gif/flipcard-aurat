@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jom Kenali Aurat! - Pendidikan Islam Tahun 4</title>
+  <style>
+    :root {
+      --bg-cream: #FDF8F2;
+      --card-cream: #FFFDF9;
+      --pastel-pink: #F7D1D8;
+      --pink-accent: #D6687E;
+      --pink-dark: #9E3E52;
+      --sage-green: #CDE0D3;
+      --sage-accent: #5C8A6D;
+      --sage-dark: #2E523C;
+      --text-main: #2F3632;
+      --gold-soft: #E8C782;
+      --shadow-soft: 0 12px 28px rgba(47, 54, 50, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Trebuchet MS', 'Comic Sans MS', sans-serif;
+      background-color: var(--bg-cream);
+      background-image: 
+        radial-gradient(circle at 12% 18%, rgba(247, 209, 216, 0.45) 0%, transparent 28%),
+        radial-gradient(circle at 88% 82%, rgba(205, 224, 211, 0.55) 0%, transparent 32%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 40px;
+    }
+
+    /* Bahagian Header & Ilustrasi Kartun */
+    header {
+      max-width: 960px;
+      width: 100%;
+      background: var(--card-cream);
+      border: 4px solid var(--sage-green);
+      border-radius: 28px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .character-box {
+      width: 110px;
+      height: 120px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .title-area {
+      text-align: center;
+      flex: 1;
+    }
+
+    .badge-subjek {
+      display: inline-block;
+      background-color: var(--sage-green);
+      color: var(--sage-dark);
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      color: var(--pink-dark);
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 0px var(--pastel-pink);
+      margin-bottom: 10px;
+    }
+
+    .instruction-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--pastel-pink);
+      color: var(--pink-dark);
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 8px 20px;
+      border-radius: 16px;
+      border: 2px dashed var(--pink-accent);
+      animation: pulseGentle 2.2s infinite ease-in-out;
+    }
+
+    @keyframes pulseGentle {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+
+    /* Bar Kemajuan & Butang Reset */
+    .controls-bar {
+      max-width: 1060px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      padding: 0 8px;
+    }
+
+    .progress-pill {
+      background: var(--card-cream);
+      border: 2px solid var(--sage-accent);
+      color: var(--sage-dark);
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 8px 18px;
+      border-radius: 50px;
+    }
+
+    .btn-reset {
+      background-color: var(--sage-accent);
+      color: #FFFFFF;
+      border: none;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(92, 138, 109, 0.3);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .btn-reset:hover {
+      background-color: var(--sage-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-reset:active {
+      transform: translateY(0);
+    }
+
+    /* Susunan Grid 3 Kad Flip */
+    .cards-grid {
+      max-width: 1080px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    /* Bekas Perspektif 3D */
+    .flip-card {
+      background-color: transparent;
+      height: 390px;
+      perspective: 1200px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card.is-flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 26px;
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* Reka Bentuk Bahagian Hadapan */
+    .flip-card-front {
+      background-color: var(--card-cream);
+      border: 5px solid var(--pastel-pink);
+    }
+
+    .flip-card:nth-child(2) .flip-card-front {
+      border-color: var(--sage-green);
+    }
+
+    .card-top-tag {
+      background-color: var(--pastel-pink);
+      color: var(--pink-dark);
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 8px 14px;
+      border-radius: 14px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    .flip-card:nth-child(2) .card-top-tag {
+      background-color: var(--sage-green);
+      color: var(--sage-dark);
+    }
+
+    .front-icon-circle {
+      width: 78px;
+      height: 78px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background-color: #FDF2F4;
+      border: 3px solid var(--pastel-pink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.3rem;
+    }
+
+    .flip-card:nth-child(2) .front-icon-circle {
+      background-color: #F0F7F2;
+      border-color: var(--sage-green);
+    }
+
+    .question-text {
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1.38;
+      color: var(--text-main);
+      padding: 0 4px;
+    }
+
+    .tap-hint {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--pink-dark);
+      background-color: rgba(247, 209, 216, 0.45);
+      padding: 8px 14px;
+      border-radius: 50px;
+      display: inline-block;
+      margin: 0 auto;
+    }
+
+    .flip-card:nth-child(2) .tap-hint {
+      color: var(--sage-dark);
+      background-color: rgba(205, 224, 211, 0.55);
+    }
+
+    /* Reka Bentuk Bahagian Belakang (Jawapan) */
+    .flip-card-back {
+      background-color: #F3F8F4;
+      border: 5px solid var(--sage-accent);
+      transform: rotateY(180deg);
+      text-align: left;
+    }
+
+    .flip-card:nth-child(2) .flip-card-back {
+      background-color: #FDF3F5;
+      border-color: var(--pink-accent);
+    }
+
+    .back-header {
+      text-align: center;
+      background-color: var(--sage-accent);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 8px 14px;
+      border-radius: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .flip-card:nth-child(2) .back-header {
+      background-color: var(--pink-accent);
+    }
+
+    .answer-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px 4px;
+    }
+
+    .answer-single {
+      font-size: 1.42rem;
+      font-weight: 700;
+      line-height: 1.48;
+      text-align: center;
+      color: var(--sage-dark);
+      background: #FFFFFF;
+      padding: 18px 16px;
+      border-radius: 18px;
+      border: 2px solid var(--sage-green);
+    }
+
+    .answer-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .answer-list li {
+      background: #FFFFFF;
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text-main);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .num-badge {
+      background-color: var(--pink-accent);
+      color: #FFFFFF;
+      min-width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .flip-card:nth-child(3) .num-badge {
+      background-color: var(--sage-accent);
+    }
+
+    .back-footer {
+      text-align: center;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #5E6B63;
+    }
+
+    /* Mesej Tahniah Apabila Semua Kad Dibuka */
+    .completion-box {
+      max-width: 720px;
+      width: 100%;
+      margin-top: 26px;
+      background-color: var(--card-cream);
+      border: 4px solid var(--gold-soft);
+      border-radius: 22px;
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--sage-dark);
+      box-shadow: var(--shadow-soft);
+      display: none;
+      animation: popIn 0.45s ease;
+    }
+
+    .completion-box.show {
+      display: block;
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.92); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Paparan Responsif Tablet & Telefon */
+    @media (max-width: 920px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .flip-card:nth-child(3) {
+        grid-column: span 2;
+        max-width: 480px;
+        width: 100%;
+        justify-self: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      header {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 18px 16px;
+      }
+      .title-area {
+        order: -1;
+        width: 100%;
+      }
+      .character-box {
+        width: 95px;
+        height: 105px;
+      }
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .flip-card:nth-child(3) {
+        grid-column: span 1;
+        max-width: 100%;
+      }
+      .flip-card {
+        height: 365px;
+      }
+      .question-text {
+        font-size: 1.38rem;
+      }
+      .answer-single {
+        font-size: 1.3rem;
+      }
+      .answer-list li {
+        font-size: 1.18rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header dengan Kartun Muslim Lelaki & Perempuan -->
+  <header>
+    <!-- Ilustrasi Kartun Murid Muslim Lelaki -->
+    <div class="character-box" aria-hidden="true">
+      <svg viewBox="0 0 120 130" width="110" height="120">
+        <!-- Latar Bulat Soft Sage -->
+        <circle cx="60" cy="68" r="52" fill="#CDE0D3" />
+        <!-- Baju Melayu Sage -->
+        <path d="M26 122 C28 96, 92 96, 94 122 Z" fill="#5C8A6D" />
+        <!-- Kolar Cekak Musang -->
+        <path d="M48 96 L60 112 L72 96 Z" fill="#FFFDF9" />
+        <circle cx="60" cy="105" r="2.2" fill="#E8C782" />
+        <circle cx="60" cy="113" r="2.2" fill="#E8C782" />
+        <!-- Leher & Muka -->
+        <rect x="52" y="82" width="16" height="16" rx="6" fill="#F9D5B8" />
+        <circle cx="60" cy="60" r="26" fill="#FDE0C8" />
+        <!-- Telinga -->
+        <circle cx="34" cy="62" r="5" fill="#F9D5B8" />
+        <circle cx="86" cy="62" r="5" fill="#F9D5B8" />
+        <!-- Songkok Hitam -->
+        <path d="M35 44 C35 24, 85 24, 85 44 L87 48 L33 48 Z" fill="#2B302D" />
+        <rect x="34" y="43" width="52" height="4" rx="2" fill="#E8C782" />
+        <!-- Mata & Senyuman Ceria -->
+        <circle cx="50" cy="60" r="3.2" fill="#2F3632" />
+        <circle cx="70" cy="60" r="3.2" fill="#2F3632" />
+        <circle cx="51" cy="59" r="1" fill="#FFFFFF" />
+        <circle cx="71" cy="59" r="1" fill="#FFFFFF" />
+        <!-- Pipi Pink -->
+        <ellipse cx="44" cy="67" rx="4.5" ry="2.5" fill="#F4A8B6" opacity="0.7" />
+        <ellipse cx="76" cy="67" rx="4.5" ry="2.5" fill="#F4A8B6" opacity="0.7" />
+        <!-- Mulut Senyum -->
+        <path d="M53 70 Q60 77 67 70" stroke="#9E3E52" stroke-width="2.8" fill="none" stroke-linecap="round" />
+      </svg>
+    </div>
+
+    <!-- Tajuk & Arahan Utama -->
+    <div class="title-area">
+      <div class="badge-subjek">PENDIDIKAN ISLAM • TAHUN 4</div>
+      <h1>JOM KENALI AURAT!</h1>
+      <div class="instruction-banner">
+        <span>👆</span>
+        <span>Tekan kad untuk melihat jawapan</span>
+      </div>
+    </div>
+
+    <!-- Ilustrasi Kartun Murid Muslim Perempuan -->
+    <div class="character-box" aria-hidden="true">
+      <svg viewBox="0 0 120 130" width="110" height="120">
+        <!-- Latar Bulat Soft Pink -->
+        <circle cx="60" cy="68" r="52" fill="#F7D1D8" />
+        <!-- Tudung Labuh Cream & Pink -->
+        <path d="M24 122 C24 68, 32 28, 60 28 C88 28, 96 68, 96 122 Z" fill="#FFFDF9" stroke="#D6687E" stroke-width="2.5" />
+        <!-- Awning Tudung -->
+        <path d="M36 56 C36 33, 84 33, 84 56 C78 44, 42 44, 36 56 Z" fill="#F2BAC5" />
+        <!-- Muka -->
+        <circle cx="60" cy="62" r="22" fill="#FDE0C8" />
+        <!-- Brooch Kecil -->
+        <circle cx="60" cy="91" r="4" fill="#5C8A6D" />
+        <circle cx="60" cy="91" r="1.8" fill="#E8C782" />
+        <!-- Mata & Senyuman Ceria -->
+        <circle cx="51" cy="61" r="3.2" fill="#2F3632" />
+        <circle cx="69" cy="61" r="3.2" fill="#2F3632" />
+        <circle cx="52" cy="60" r="1" fill="#FFFFFF" />
+        <circle cx="70" cy="60" r="1" fill="#FFFFFF" />
+        <!-- Pipi Pink -->
+        <ellipse cx="45" cy="68" rx="4.5" ry="2.5" fill="#F4A8B6" opacity="0.8" />
+        <ellipse cx="75" cy="68" rx="4.5" ry="2.5" fill="#F4A8B6" opacity="0.8" />
+        <!-- Mulut Senyum -->
+        <path d="M54 71 Q60 77 66 71" stroke="#9E3E52" stroke-width="2.8" fill="none" stroke-linecap="round" />
+      </svg>
+    </div>
+  </header>
+
+  <!-- Bar Status & Butang Set Semula -->
+  <div class="controls-bar">
+    <div class="progress-pill" id="progressText">Kad dibuka: 0 / 3</div>
+    <button type="button" class="btn-reset" id="resetBtn">🔄 Tutup Semua Kad</button>
+  </div>
+
+  <!-- 3 Kad Flip Interaktif -->
+  <main class="cards-grid">
+
+    <!-- KAD 1: MAKSUD AURAT -->
+    <div class="flip-card" role="button" tabindex="0" aria-label="Kad 1: Maksud Aurat. Tekan untuk melihat jawapan." data-card="1">
+      <div class="flip-card-inner">
+        <!-- Hadapan -->
+        <div class="flip-card-front">
+          <div class="card-top-tag">Kad 1 • Maksud Aurat</div>
+          <div class="front-icon-circle" aria-hidden="true">📖</div>
+          <h2 class="question-text">Apakah maksud aurat?</h2>
+          <div class="tap-hint">Tekan kad untuk melihat jawapan</div>
+        </div>
+        <!-- Belakang -->
+        <div class="flip-card-back">
+          <div class="back-header">JAWAPAN KAD 1</div>
+          <div class="answer-content">
+            <p class="answer-single">
+              Aurat ialah bahagian tubuh yang wajib ditutup mengikut syarak.
+            </p>
+          </div>
+          <div class="back-footer">Tekan semula untuk menutup kad</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KAD 2: KEPENTINGAN MENUTUP AURAT -->
+    <div class="flip-card" role="button" tabindex="0" aria-label="Kad 2: Kepentingan Menutup Aurat. Tekan untuk melihat jawapan." data-card="2">
+      <div class="flip-card-inner">
+        <!-- Hadapan -->
+        <div class="flip-card-front">
+          <div class="card-top-tag">Kad 2 • Kepentingan Menutup Aurat</div>
+          <div class="front-icon-circle" aria-hidden="true">🌟</div>
+          <h2 class="question-text">Mengapakah kita perlu menutup aurat?</h2>
+          <div class="tap-hint">Tekan kad untuk melihat jawapan</div>
+        </div>
+        <!-- Belakang -->
+        <div class="flip-card-back">
+          <div class="back-header">JAWAPAN KAD 2</div>
+          <div class="answer-content">
+            <ol class="answer-list">
+              <li><span class="num-badge">1</span><span>Mentaati perintah Allah SWT.</span></li>
+              <li><span class="num-badge">2</span><span>Memelihara maruah diri.</span></li>
+              <li><span class="num-badge">3</span><span>Membentuk akhlak Muslim.</span></li>
+            </ol>
+          </div>
+          <div class="back-footer">Tekan semula untuk menutup kad</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KAD 3: CIRI PAKAIAN MENUTUP AURAT -->
+    <div class="flip-card" role="button" tabindex="0" aria-label="Kad 3: Ciri Pakaian Menutup Aurat. Tekan untuk melihat jawapan." data-card="3">
+      <div class="flip-card-inner">
+        <!-- Hadapan -->
+        <div class="flip-card-front">
+          <div class="card-top-tag">Kad 3 • Ciri Pakaian Menutup Aurat</div>
+          <div class="front-icon-circle" aria-hidden="true">👕</div>
+          <h2 class="question-text">Bagaimanakah ciri pakaian yang menutup aurat?</h2>
+          <div class="tap-hint">Tekan kad untuk melihat jawapan</div>
+        </div>
+        <!-- Belakang -->
+        <div class="flip-card-back">
+          <div class="back-header">JAWAPAN KAD 3</div>
+          <div class="answer-content">
+            <ol class="answer-list">
+              <li><span class="num-badge">1</span><span>Tidak ketat.</span></li>
+              <li><span class="num-badge">2</span><span>Tidak jarang.</span></li>
+              <li><span class="num-badge">3</span><span>Menutup aurat dengan sempurna.</span></li>
+            </ol>
+          </div>
+          <div class="back-footer">Tekan semula untuk menutup kad</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Mesej Penghargaan -->
+  <div class="completion-box" id="completionMsg">
+    🎉 Tahniah! Kamu telah membaca ketiga-tiga kad <strong>Jom Kenali Aurat!</strong>
+  </div>
+
+  <script>
+    (function () {
+      const cards = document.querySelectorAll('.flip-card');
+      const progressText = document.getElementById('progressText');
+      const resetBtn = document.getElementById('resetBtn');
+      const completionMsg = document.getElementById('completionMsg');
+      const openedSet = new Set();
+
+      function updateProgress() {
+        progressText.textContent = `Kad dibuka: ${openedSet.size} / ${cards.length}`;
+        if (openedSet.size === cards.length) {
+          completionMsg.classList.add('show');
+        }
+      }
+
+      function toggleCard(card) {
+        const isNowFlipped = card.classList.toggle('is-flipped');
+        const cardId = card.getAttribute('data-card');
+
+        if (isNowFlipped) {
+          openedSet.add(cardId);
+          updateProgress();
+        }
+      }
+
+      cards.forEach((card) => {
+        // Klik menggunakan tetikus atau skrin sentuh
+        card.addEventListener('click', function () {
+          toggleCard(this);
+        });
+
+        // Sokongan papan kekunci (Enter / Space) untuk aksesibiliti
+        card.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            toggleCard(this);
+          }
+        });
+      });
+
+      // Butang tutup semua kad & set semula kemajuan
+      resetBtn.addEventListener('click', function () {
+        cards.forEach((card) => {
+          card.classList.remove('is-flipped');
+        });
+        openedSet.clear();
+        completionMsg.classList.remove('show');
+        updateProgress();
+      });
+    })();
+  </script>
+</body>
+</html>
